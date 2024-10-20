@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Header } from "@/components/Header";
@@ -21,7 +21,20 @@ export default function TextToImageGenerator() {
 
   const { fetchImage, isLoading: isFetchingImage, isError } = useFetchImage();
 
+  const preventDevTools = useCallback(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+  }, []);
+
   useEffect(() => {
+    preventDevTools();
     if (isFetchingImage) {
       const messages = [
         "Parsing the prompt...",
@@ -63,7 +76,7 @@ export default function TextToImageGenerator() {
     const result = await fetchImage(inputText);
     if (!isError && result) {
       setGeneratedImageUrl(URL.createObjectURL(result));
-    } 
+    }
   };
 
   const handleDownload = () => {
