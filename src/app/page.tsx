@@ -87,7 +87,7 @@ export default function TextToImageGenerator() {
       <main className="flex-grow flex items-center justify-center p-4">
         <Card className="w-full max-w-2xl">
           <CardContent className="p-6">
-            <div className="aspect-square w-full bg-muted rounded-lg mb-6 flex items-center justify-center relative">
+            <div className="aspect-square w-full bg-muted rounded-lg mb-6 flex items-center justify-center relative overflow-hidden">
               {generatedImageUrl ? (
                 <>
                   <Image
@@ -95,7 +95,7 @@ export default function TextToImageGenerator() {
                     alt="Generated image"
                     width={1000}
                     height={1000}
-                    className="max-w-full max-h-full object-contain"
+                    className="max-w-full max-h-full object-contain rounded-lg"
                   />
                   <Button
                     onClick={handleDownload}
